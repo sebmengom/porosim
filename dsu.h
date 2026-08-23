@@ -7,6 +7,7 @@ public:
   unionFind(int n);
   int findSet(int x);
   void unionSets(int a, int b);
+  bool connected(int a, int b);
 
 private:
   std::vector<int> parent;

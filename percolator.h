@@ -13,7 +13,7 @@ public:
 
   void openGate(int row, int col);
 
-  int isOpen(int row, int col);
+  bool isOpen(int row, int col);
 
   bool percolates();
 

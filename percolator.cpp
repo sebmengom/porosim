@@ -41,3 +41,10 @@ void percolator::openGate(int row, int col) {
     }
   }
 }
+
+bool percolator::isOpen(int row, int col) {
+  int i{row * n + col};
+  return gateStatus[i] == 1;
+}
+
+bool percolator::percolates() { return arr.connected(top, bottom); }

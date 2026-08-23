@@ -29,3 +29,4 @@ int unionFind::findSet(int x) {
 
   return parent[x] = findSet(parent[x]);
 }
+bool unionFind::connected(int a, int b) { return findSet(a) == findSet(b); }

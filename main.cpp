@@ -1,14 +1,15 @@
 #include "dsu.h"
+#include "percolator.h"
 #include <iostream>
 
 int main() {
-  unionFind arr(10);
-  arr.unionSets(4, 1);
-  arr.unionSets(3, 4);
-  arr.unionSets(5, 3);
-  arr.unionSets(2, 1);
+  percolator p{3};
+  p.openGate(0, 3);
+  p.openGate(1, 2);
+  p.openGate(0, 2);
+  p.openGate(2, 1);
+  p.openGate(2, 2);
+  p.openGate(3, 2);
 
-  std::cout << (arr.findSet(3) == arr.findSet(5)) << '\n'
-            << (arr.findSet(9) == arr.findSet(3));
-  return 0;
+  std::cout << p.percolates();
 }
