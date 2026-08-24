@@ -1,15 +1,19 @@
-#include "dsu.h"
-#include "percolator.h"
+#include "montecarlo.h"
 #include <iostream>
+#include <string>
 
-int main() {
-  percolator p{4};
-  p.openGate(0, 3);
-  p.openGate(1, 2);
-  p.openGate(0, 2);
-  p.openGate(2, 1);
-  p.openGate(2, 2);
-  p.openGate(3, 2);
+int main(int argc, char *argv[]) {
+  if (argc == 3) {
+    int gridSize{std::stoi(argv[1])};
+    int numberOfTrials{std::stoi(argv[2])};
 
-  std::cout << p.percolates();
+    montecarlo sim(gridSize, numberOfTrials);
+    sim.trials();
+    sim.printResults();
+
+    return 0;
+  } else {
+    std::cout << "RUN BY: ./'executable' #gridSize INT #numberOfTrials INT"
+              << '\n';
+  }
 }
