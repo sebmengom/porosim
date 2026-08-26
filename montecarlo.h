@@ -16,6 +16,7 @@ private:
   std::mt19937 machine{rd()};
   std::uniform_real_distribution<double> distribution{0, 1};
   std::vector<std::pair<double, double>> results{};
+  std::vector<double> newResults{};
   int sizeOfP{static_cast<int>(p.size())};
 
 public:
@@ -23,6 +24,9 @@ public:
   void trials();
   bool singleTrial(double pItem);
   void printResults();
+  void newTrials();
+  double newSingleTrial();
+  void printNewResults();
 };
 
 #endif // !montecarlo_h
