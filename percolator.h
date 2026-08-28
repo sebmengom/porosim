@@ -12,6 +12,8 @@ private:
   unionFind arr;
   unionFind arrTop;
   std::vector<int> gateStatus;
+  std::vector<int> visited;
+  void resetVisited();
 
 public:
   percolator(int n);
@@ -23,6 +25,14 @@ public:
   bool percolates();
 
   bool isFull(int row, int col);
+
+  void depthFirstSearch(int row, int col);
+
+  void runDFS(int row, int col);
+
+  bool isVisited(int row, int col);
+
+  void printVisited();
 };
 
 #endif // !PERCOLATOR_H
