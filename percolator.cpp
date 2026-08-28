@@ -2,8 +2,8 @@
 #include <cassert>
 
 percolator::percolator(int n)
-    : n(n), arr(n * n + 2), gateStatus(n * n, 0), top(n * n),
-      bottom((n * n) + 1) {};
+    : n(n), top(n * n), bottom((n * n) + 1), arr(n * n + 2),
+      gateStatus(n * n, 0) {};
 void percolator::openGate(int row, int col) {
   assert(row >= 0 && row < n && col >= 0 && col < n);
   int i{row * n + col};

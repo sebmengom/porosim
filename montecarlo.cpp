@@ -58,7 +58,7 @@ double montecarlo::newSingleTrial() {
   std::vector<int> shuffled(gridSize * gridSize);
   std::iota(shuffled.begin(), shuffled.end(), 0);
   std::shuffle(shuffled.begin(), shuffled.end(), machine);
-  for (int i = 0; i < gridSize * gridSize - 1; i++) {
+  for (int i = 0; i < gridSize * gridSize; i++) {
     row = shuffled[i] / gridSize;
     col = shuffled[i] % gridSize;
     pGrid.openGate(row, col);
