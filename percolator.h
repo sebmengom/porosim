@@ -10,6 +10,7 @@ private:
   int top{};
   int bottom{};
   unionFind arr;
+  unionFind arrTop;
   std::vector<int> gateStatus;
 
 public:
@@ -20,6 +21,8 @@ public:
   bool isOpen(int row, int col);
 
   bool percolates();
+
+  bool isFull(int row, int col);
 };
 
 #endif // !PERCOLATOR_H
