@@ -8,6 +8,7 @@ montecarlo::montecarlo(int gridSize, int numberOfTrials)
     : gridSize(gridSize), numberOfTrials(numberOfTrials) {};
 
 void montecarlo::trials() {
+  results.clear();
   for (double pItem : p) {
     int percolated{};
     for (int i{0}; i < numberOfTrials; i++) {
@@ -44,6 +45,7 @@ void montecarlo::printResults() {
 }
 
 void montecarlo::newTrials() {
+  newResults.clear();
   for (int i = 0; i < numberOfTrials; i++) {
     newResults.push_back(newSingleTrial());
   };

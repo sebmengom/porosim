@@ -1,2 +1,9 @@
-test
-git
+*
+
+!*/
+
+!*.h
+!*.cpp
+!.gitignore
+!Makefile
+testing.cpp
