@@ -23,7 +23,7 @@ void montecarlo::trials() {
   }
 };
 
-bool montecarlo::singleTrial(double p) {
+bool montecarlo::singleTrial(double pItem) {
   percolator pGrid{gridSize};
   int row{};
   int col{};
@@ -32,7 +32,7 @@ bool montecarlo::singleTrial(double p) {
     row = i / gridSize;
     col = i % gridSize;
     dist = distribution(machine);
-    if (dist < p) {
+    if (dist < pItem) {
       pGrid.openGate(row, col);
     }
   }

@@ -31,8 +31,6 @@ public:
   void runDFS(int row, int col);
 
   bool isVisited(int row, int col);
-
-  void printVisited();
 };
 
 #endif // !PERCOLATOR_H

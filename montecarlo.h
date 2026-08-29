@@ -1,9 +1,7 @@
 #ifndef montecarlo_h
 #define montecarlo_h
 
-#include "dsu.h"
 #include <random>
-#include <string>
 #include <utility>
 #include <vector>
 class montecarlo {
@@ -17,7 +15,6 @@ private:
   std::uniform_real_distribution<double> distribution{0, 1};
   std::vector<std::pair<double, double>> results{};
   std::vector<double> newResults{};
-  int sizeOfP{static_cast<int>(p.size())};
 
 public:
   montecarlo(int gridSize, int numberOfTrials);

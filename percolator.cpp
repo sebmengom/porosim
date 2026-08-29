@@ -4,7 +4,9 @@
 
 percolator::percolator(int n)
     : n(n), top(n * n), bottom((n * n) + 1), arr((n * n) + 2),
-      arrTop((n * n) + 1), gateStatus(n * n, 0), visited(n * n, 0) {};
+      arrTop((n * n) + 1), gateStatus(n * n, 0), visited(n * n, 0) {
+  assert(n > 0);
+};
 void percolator::openGate(int row, int col) {
   assert(row >= 0 && row < n && col >= 0 && col < n);
   int i{row * n + col};
@@ -51,6 +53,7 @@ void percolator::openGate(int row, int col) {
 }
 
 bool percolator::isOpen(int row, int col) {
+  assert(row >= 0 && row < n && col >= 0 && col < n);
   int i{row * n + col};
   return gateStatus[i] == 1;
 }
@@ -58,6 +61,7 @@ bool percolator::isOpen(int row, int col) {
 bool percolator::percolates() { return arr.connected(top, bottom); }
 
 bool percolator::isFull(int row, int col) {
+  assert(row >= 0 && row < n && col >= 0 && col < n);
   return arrTop.connected(top, (row * n + col));
 }
 
@@ -101,5 +105,6 @@ void percolator::runDFS(int row, int col) {
 }
 
 bool percolator::isVisited(int row, int col) {
+  assert(row >= 0 && row < n && col >= 0 && col < n);
   return 1 == visited[row * n + col];
 }
