@@ -2,8 +2,8 @@
 #define PERCOLATOR_H
 
 #include "dsu.h"
+#include <stack>
 #include <vector>
-
 class percolator {
 private:
   int n{};
@@ -13,7 +13,10 @@ private:
   unionFind arrTop;
   std::vector<int> gateStatus;
   std::vector<int> visited;
+  std::vector<int> parent;
   void resetVisited();
+  void pushToStack(int nb, int parentIndex, std::stack<int> &stack,
+                   std::vector<int> &parentArray);
 
 public:
   percolator(int n);
@@ -26,11 +29,15 @@ public:
 
   bool isFull(int row, int col);
 
-  void depthFirstSearch(int row, int col);
+  void depthFirstSearch();
 
-  void runDFS(int row, int col);
+  void runDFS();
 
   bool isVisited(int row, int col);
+
+  std::vector<int> findPath(int row, int col);
+
+  bool injectionReaches();
 };
 
 #endif // !PERCOLATOR_H

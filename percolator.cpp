@@ -1,10 +1,12 @@
 #include "percolator.h"
 #include <cassert>
+#include <stack>
 #include <vector>
 
 percolator::percolator(int n)
     : n(n), top(n * n), bottom((n * n) + 1), arr((n * n) + 2),
-      arrTop((n * n) + 1), gateStatus(n * n, 0), visited(n * n, 0) {
+      arrTop((n * n) + 1), gateStatus(n * n, 0), visited(n * n, 0),
+      parent(n * n, 0) {
   assert(n > 0);
 };
 void percolator::openGate(int row, int col) {
@@ -65,31 +67,50 @@ bool percolator::isFull(int row, int col) {
   return arrTop.connected(top, (row * n + col));
 }
 
-void percolator::depthFirstSearch(int row, int col) {
+void percolator::depthFirstSearch() {
 
-  int i{row * n + col};
+  std::stack<int> stack{};
+  visited[0] = 1;
+  openGate(0, 0);
+  parent[0] = -1;
+  stack.push(0);
 
-  if (visited[i] == 1) {
-    return;
-  }
+  while (!(stack.empty())) {
+    int i{stack.top()};
+    stack.pop();
+    int nb{};
+    int row{i / n};
+    int col{i % n};
 
-  if (isOpen(row, col)) {
-    visited[i] = 1;
-  } else {
-    return;
-  }
-  if (col != n - 1) {
-    depthFirstSearch(row, col + 1);
-  }
-  if (row != 0) {
-    depthFirstSearch(row - 1, col);
-  }
-  if (col != 0) {
-    depthFirstSearch(row, col - 1);
-  }
+    if (row != 0) {
+      nb = i - n;
 
-  if (row != n - 1) {
-    depthFirstSearch(row + 1, col);
+      if (gateStatus[nb] == 1 && visited[nb] == 0) {
+        pushToStack(nb, i, stack, parent);
+      }
+    }
+
+    if (row != n - 1) {
+      nb = i + n;
+      if (gateStatus[nb] == 1 && visited[nb] == 0) {
+        pushToStack(nb, i, stack, parent);
+      }
+    }
+
+    if (col != n - 1) {
+      nb = i + 1;
+
+      if (gateStatus[nb] == 1 && visited[nb] == 0) {
+        pushToStack(nb, i, stack, parent);
+      }
+    }
+
+    if (col != 0) {
+      nb = i - 1;
+      if (gateStatus[nb] == 1 && visited[nb] == 0) {
+        pushToStack(nb, i, stack, parent);
+      }
+    }
   }
 }
 
@@ -97,14 +118,45 @@ void percolator::resetVisited() {
   for (auto &i : visited) {
     i = 0;
   }
+  for (auto &i : parent) {
+    i = 0;
+  }
 }
 
-void percolator::runDFS(int row, int col) {
+void percolator::runDFS() {
   percolator::resetVisited();
-  percolator::depthFirstSearch(row, col);
+  percolator::depthFirstSearch();
 }
 
 bool percolator::isVisited(int row, int col) {
   assert(row >= 0 && row < n && col >= 0 && col < n);
   return 1 == visited[row * n + col];
+}
+
+void percolator::pushToStack(int nb, int parentIndex, std::stack<int> &stack,
+                             std::vector<int> &parentArray) {
+  visited[nb] = 1;
+  parentArray[nb] = parentIndex;
+  stack.push(nb);
+}
+std::vector<int> percolator::findPath(int row, int col) {
+  assert(isVisited(row, col));
+  int i{row * n + col};
+  std::vector<int> path{};
+  int parentIndex{i};
+  while (parentIndex != -1) {
+    path.push_back(parentIndex);
+    parentIndex = parent[parentIndex];
+  }
+  return path;
+}
+
+bool percolator::injectionReaches() {
+  assert(isOpen(0, 0));
+  for (int col{0}; col < n; col++) {
+    if (isVisited(n - 1, col)) {
+      return true;
+    }
+  }
+  return false;
 }
