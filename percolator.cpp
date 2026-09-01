@@ -5,8 +5,8 @@
 
 percolator::percolator(int n)
     : n(n), top(n * n), bottom((n * n) + 1), arr((n * n) + 2),
-      arrTop((n * n) + 1), gateStatus(n * n, 0), visited(n * n, 0),
-      parent(n * n, 0) {
+      arrTop((n * n) + 1), injectionArr(n * n + 2), gateStatus(n * n, 0),
+      visited(n * n, 0), parent(n * n, 0) {
   assert(n > 0);
 };
 void percolator::openGate(int row, int col) {
@@ -23,10 +23,12 @@ void percolator::openGate(int row, int col) {
     if (gateStatus[nb] == 1) {
       arr.unionSets(i, nb);
       arrTop.unionSets(i, nb);
+      injectionArr.unionSets(i, nb);
     };
   }
   if (row == n - 1) {
     arr.unionSets(i, bottom);
+    injectionArr.unionSets(i, bottom);
   }
 
   if (row != n - 1) {
@@ -34,6 +36,7 @@ void percolator::openGate(int row, int col) {
     if (gateStatus[nb] == 1) {
       arr.unionSets(i, nb);
       arrTop.unionSets(i, nb);
+      injectionArr.unionSets(i, nb);
     }
   }
 
@@ -42,6 +45,7 @@ void percolator::openGate(int row, int col) {
     if (gateStatus[nb] == 1) {
       arr.unionSets(i, nb);
       arrTop.unionSets(i, nb);
+      injectionArr.unionSets(i, nb);
     };
   }
 
@@ -50,6 +54,7 @@ void percolator::openGate(int row, int col) {
     if (gateStatus[nb] == 1) {
       arr.unionSets(i, nb);
       arrTop.unionSets(i, nb);
+      injectionArr.unionSets(i, nb);
     }
   }
 }
@@ -151,12 +156,8 @@ std::vector<int> percolator::findPath(int row, int col) {
   return path;
 }
 
-bool percolator::injectionReaches() {
+bool percolator::injectionReaches(int row, int col) {
   assert(isOpen(0, 0));
-  for (int col{0}; col < n; col++) {
-    if (isVisited(n - 1, col)) {
-      return true;
-    }
-  }
-  return false;
+  assert(row >= 0 && row < n && col >= 0 && col < n);
+  return injectionArr.connected(0, (bottom));
 }

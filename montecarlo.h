@@ -14,16 +14,28 @@ private:
   std::mt19937 machine{rd()};
   std::uniform_real_distribution<double> distribution{0, 1};
   std::vector<std::pair<double, double>> results{};
-  std::vector<double> newResults{};
 
 public:
   montecarlo(int gridSize, int numberOfTrials);
+
   void trials();
+
   bool singleTrial(double pItem);
+
   void printResults();
+
   void newTrials();
+
   double newSingleTrial();
-  void printNewResults();
+
+  void printNewResults(std::vector<double> resultsList);
+
+  double injectionTrial();
+
+  void injectionTrials();
+
+  std::vector<double> newResults{};
+  std::vector<double> injectionResults{};
 };
 
 #endif // !montecarlo_h

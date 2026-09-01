@@ -69,10 +69,38 @@ double montecarlo::newSingleTrial() {
   return 1;
 }
 
-void montecarlo::printNewResults() {
+void montecarlo::printNewResults(std::vector<double> resultsList) {
   double result{};
-  for (double r : newResults) {
+  for (double r : resultsList) {
     result += r;
   }
   std::cout << "Threshold: " << result / numberOfTrials << '\n';
+}
+
+double montecarlo::injectionTrial() {
+  percolator grid{gridSize};
+  int row{};
+  int col{};
+  grid.openGate(0, 0);
+  std::vector<int> shuffled(gridSize * gridSize);
+  std::iota(shuffled.begin(), shuffled.end(), 0);
+  std::shuffle(shuffled.begin() + 1, shuffled.end(), machine);
+
+  for (int i = 1; i < gridSize * gridSize; i++) {
+    row = shuffled[i] / gridSize;
+    col = shuffled[i] % gridSize;
+    grid.openGate(row, col);
+
+    if (grid.injectionReaches(row, col)) {
+      return (static_cast<double>(i) + 1) / (gridSize * gridSize);
+    }
+  }
+  return 1;
+}
+
+void montecarlo::injectionTrials() {
+  injectionResults.clear();
+  for (int i = 0; i < numberOfTrials; i++) {
+    injectionResults.push_back(injectionTrial());
+  };
 }

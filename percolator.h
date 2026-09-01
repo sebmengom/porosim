@@ -11,6 +11,7 @@ private:
   int bottom{};
   unionFind arr;
   unionFind arrTop;
+  unionFind injectionArr;
   std::vector<int> gateStatus;
   std::vector<int> visited;
   std::vector<int> parent;
@@ -37,7 +38,7 @@ public:
 
   std::vector<int> findPath(int row, int col);
 
-  bool injectionReaches();
+  bool injectionReaches(int row, int col);
 };
 
 #endif // !PERCOLATOR_H
