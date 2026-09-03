@@ -14,6 +14,7 @@ private:
   std::mt19937 machine{rd()};
   std::uniform_real_distribution<double> distribution{0, 1};
   std::vector<std::pair<double, double>> results{};
+  std::vector<int> path{};
 
 public:
   montecarlo(int gridSize, int numberOfTrials);
@@ -30,7 +31,7 @@ public:
 
   void printNewResults(std::vector<double> resultsList);
 
-  double injectionTrial();
+  double injectionTrial(int trialNum);
 
   void injectionTrials();
 

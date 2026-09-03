@@ -1,9 +1,11 @@
 #include "montecarlo.h"
+#include "pathwriter.h"
 #include "percolator.h"
 #include <algorithm>
 #include <iostream>
 #include <numeric>
 #include <vector>
+
 montecarlo::montecarlo(int gridSize, int numberOfTrials)
     : gridSize(gridSize), numberOfTrials(numberOfTrials) {};
 
@@ -77,7 +79,7 @@ void montecarlo::printNewResults(std::vector<double> resultsList) {
   std::cout << "Threshold: " << result / numberOfTrials << '\n';
 }
 
-double montecarlo::injectionTrial() {
+double montecarlo::injectionTrial(int trialNum) {
   percolator grid{gridSize};
   int row{};
   int col{};
@@ -92,6 +94,9 @@ double montecarlo::injectionTrial() {
     grid.openGate(row, col);
 
     if (grid.injectionReaches(row, col)) {
+      grid.runDFS();
+      path = grid.findPath(row, col);
+      writePathToCsv(path, gridSize, filename(trialNum));
       return (static_cast<double>(i) + 1) / (gridSize * gridSize);
     }
   }
@@ -101,6 +106,6 @@ double montecarlo::injectionTrial() {
 void montecarlo::injectionTrials() {
   injectionResults.clear();
   for (int i = 0; i < numberOfTrials; i++) {
-    injectionResults.push_back(injectionTrial());
+    injectionResults.push_back(injectionTrial(i));
   };
 }
