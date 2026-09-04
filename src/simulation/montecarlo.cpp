@@ -1,6 +1,6 @@
 #include "simulation/montecarlo.h"
-#include "utils/pathwriter.h"
 #include "percolator/percolator.h"
+#include "utils/pathwriter.h"
 #include <algorithm>
 #include <iostream>
 #include <numeric>
@@ -93,7 +93,7 @@ double montecarlo::injectionTrial(int trialNum) {
     col = shuffled[i] % gridSize;
     grid.openGate(row, col);
 
-    if (grid.injectionReaches(row, col)) {
+    if (grid.injectionReaches()) {
       grid.runDFS();
       path = grid.findPath(row, col);
       writePathToCsv(path, gridSize, filename(trialNum));
