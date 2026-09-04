@@ -1,4 +1,4 @@
-#include "percolator.h"
+#include "percolator/percolator.h"
 #include <cassert>
 #include <stack>
 #include <vector>

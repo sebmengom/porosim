@@ -1,6 +1,6 @@
-#include "montecarlo.h"
-#include "pathwriter.h"
-#include "percolator.h"
+#include "simulation/montecarlo.h"
+#include "utils/pathwriter.h"
+#include "percolator/percolator.h"
 #include <algorithm>
 #include <iostream>
 #include <numeric>

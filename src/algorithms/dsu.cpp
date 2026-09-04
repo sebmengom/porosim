@@ -1,4 +1,4 @@
-#include "dsu.h"
+#include "algorithms/dsu.h"
 #include <utility>
 
 unionFind::unionFind(int n) {

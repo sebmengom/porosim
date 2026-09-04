@@ -1,7 +1,7 @@
 #ifndef PERCOLATOR_H
 #define PERCOLATOR_H
 
-#include "dsu.h"
+#include "algorithms/dsu.h"
 #include <stack>
 #include <vector>
 class percolator {
