@@ -1,4 +1,5 @@
 #include "utils/pathwriter.h"
+#include <cstddef>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -13,7 +14,7 @@ int writePathToCsv(std::vector<int> &path, int n, const std::string &filename) {
 
   csv_file << "Step, Row, Col\n";
 
-  for (auto step{0}; step < path.size(); step++) {
+  for (std::size_t step{0}; step < path.size(); step++) {
     int index = path[step];
     int row = index / n;
     int col = index % n;
