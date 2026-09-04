@@ -2,6 +2,7 @@
 #include "percolator/percolator.h"
 #include "utils/pathwriter.h"
 #include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <numeric>
 #include <vector>
@@ -96,7 +97,8 @@ double montecarlo::injectionTrial(int trialNum) {
     if (grid.injectionReaches()) {
       grid.runDFS();
       path = grid.findPath(row, col);
-      writePathToCsv(path, gridSize, filename(trialNum));
+      int writeStatus = writePathToCsv(path, gridSize, filename(trialNum));
+      assert(writeStatus == 0);
       return (static_cast<double>(i) + 1) / (gridSize * gridSize);
     }
   }

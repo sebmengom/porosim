@@ -27,15 +27,16 @@ int main(int argc, char *argv[]) {
       elapsedTest = std::chrono::duration_cast<std::chrono::milliseconds>(
           endTest - startTest);
 
-      sim.printNewResults(injectionSim.injectionResults);
+      injectionSim.printNewResults(injectionSim.injectionResults);
       std::cout << "Time elapsed: " << elapsedTest.count() << '\n';
+      return 0;
     } catch (...) {
       std::cout << "Invalid Input.\n";
       return 1;
     }
-    return 0;
   } else {
     std::cout << "RUN BY: ./'executable' #gridSize INT #numberOfTrials INT"
               << '\n';
+    return 1;
   }
 }
