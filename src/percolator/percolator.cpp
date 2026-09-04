@@ -76,7 +76,6 @@ void percolator::depthFirstSearch() {
 
   std::stack<int> stack{};
   visited[0] = 1;
-  openGate(0, 0);
   parent[0] = -1;
   stack.push(0);
 
@@ -156,8 +155,6 @@ std::vector<int> percolator::findPath(int row, int col) {
   return path;
 }
 
-bool percolator::injectionReaches(int row, int col) {
-  assert(isOpen(0, 0));
-  assert(row >= 0 && row < n && col >= 0 && col < n);
+bool percolator::injectionReaches() {
   return injectionArr.connected(0, (bottom));
 }

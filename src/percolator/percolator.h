@@ -38,7 +38,7 @@ public:
 
   std::vector<int> findPath(int row, int col);
 
-  bool injectionReaches(int row, int col);
+  bool injectionReaches();
 };
 
 #endif // !PERCOLATOR_H
