@@ -1,4 +1,5 @@
 #include "simulation/montecarlo.h"
+#include "montecarlo.h"
 #include "percolator/percolator.h"
 #include "utils/pathwriter.h"
 #include <algorithm>
@@ -110,4 +111,10 @@ void montecarlo::injectionTrials() {
   for (int i = 0; i < numberOfTrials; i++) {
     injectionResults.push_back(injectionTrial(i));
   };
+}
+const std::vector<double> &montecarlo::getNewResults() const {
+  return newResults;
+}
+const std::vector<double> &montecarlo::getInjectionResults() const {
+  return injectionResults;
 }

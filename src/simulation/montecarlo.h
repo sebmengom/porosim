@@ -15,6 +15,8 @@ private:
   std::uniform_real_distribution<double> distribution{0, 1};
   std::vector<std::pair<double, double>> results{};
   std::vector<int> path{};
+  std::vector<double> newResults{};
+  std::vector<double> injectionResults{};
 
 public:
   montecarlo(int gridSize, int numberOfTrials);
@@ -35,8 +37,8 @@ public:
 
   void injectionTrials();
 
-  std::vector<double> newResults{};
-  std::vector<double> injectionResults{};
+  const std::vector<double> &getNewResults() const;
+  const std::vector<double> &getInjectionResults() const;
 };
 
 #endif // !montecarlo_h
