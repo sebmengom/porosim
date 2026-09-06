@@ -32,7 +32,7 @@ public:
 
   void depthFirstSearch();
 
-  void runDFS();
+  void runDfsFromInjection();
 
   bool isVisited(int row, int col);
 

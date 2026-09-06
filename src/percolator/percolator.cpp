@@ -127,7 +127,7 @@ void percolator::resetVisited() {
   }
 }
 
-void percolator::runDFS() {
+void percolator::runDfsFromInjection() {
   percolator::resetVisited();
   percolator::depthFirstSearch();
 }

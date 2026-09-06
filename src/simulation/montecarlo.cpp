@@ -95,7 +95,7 @@ double montecarlo::injectionTrial(int trialNum) {
     grid.openGate(row, col);
 
     if (grid.injectionReaches()) {
-      grid.runDFS();
+      grid.runDfsFromInjection();
       path = grid.findPath(row, col);
       int writeStatus = writePathToCsv(path, gridSize, filename(trialNum));
       assert(writeStatus == 0);
