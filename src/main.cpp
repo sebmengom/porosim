@@ -9,7 +9,10 @@ int main(int argc, char *argv[]) {
     try {
       int gridSize{std::stoi(argv[1])};
       int numberOfTrials{std::stoi(argv[2])};
-
+      if (gridSize <= 0 || numberOfTrials <= 0) {
+        std::cout << "Invalid Input. \n";
+        return 1;
+      }
       montecarlo sim(gridSize, numberOfTrials);
       auto startTest = std::chrono::steady_clock::now();
       sim.newTrials();
