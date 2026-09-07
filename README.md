@@ -47,8 +47,20 @@ The other 2 checks (row==0 and row==n-1) union directly with top/bottom, with no
 Converts row/col into the 1D index the same way openGate does, and returns whether gateStatus[i] is 1.
 ### percolates
 Just returns arr.connected(top, bottom). If the two virtual nodes ended up in the same set, the grid percolated. No need to check every top-row cell against every bottom-row cell individually.
-## Roadmap
-### Next: Monte Carlo validation
-Generate random cell openings using `<random>`, run hundreds of trials per grid size (10, 50, 100...), track the fraction of open cells at the moment each trial percolates, and average across trials. Compare the result against the theoretical site percolation threshold (~0.593) for a 2D square lattice.
-### v2: pore-and-rock extension
-Add a fluid injection point, route the fluid with BFS/DFS to trace the actual path it follows (not just detect connectivity), and benchmark performance across grid sizes using `<chrono>`.
+
+## Monte Carlo simulation
+Implemented a montecarlo simulation that runs on an input of gridSize and numberOfTrials. Based on those results it returns a list with the average probability, then divides by the percolation number to find a threshold.
+
+## Newman Ziff
+Implemented the Newman Ziff method, to replace the fixed probabilities method. It randomizes an array of cells in order, and then opens it one by one until it percolates, then it returns the threshold. 11 times faster than the previous method.
+
+## v2: pore-and-rock extension
+
+## Injection
+Added the injection, injectionReaches uses a 3rd DSU array that connects from 0,0 cell with the bottom. I used another DSU since it is another logic, i did not want the injection to interefence with a normal percolation system.
+
+## DFS
+Implemented a DFS algorithm to find the path from top to bottom, runDfsFromInjection runs a dfs from injection point, and then findPath finds the route using the parent array. checks the parent of a cell, and then joins that cell to the parent of the previous parent cell to find the path until parent is -1, meaning it reached 0, 0 point.
+
+## Exported to csv
+new file "pathwriter.cpp" writes the route to a new csv file, creates directory if it doesnt exist. writes step, row, col.
