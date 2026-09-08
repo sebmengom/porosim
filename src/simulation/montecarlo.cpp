@@ -12,45 +12,8 @@ montecarlo::montecarlo(int gridSize, int numberOfTrials)
 
 void montecarlo::trials() {
   results.clear();
-  for (double pItem : p) {
-    int percolated{};
-    for (int i{0}; i < numberOfTrials; i++) {
-
-      bool result = singleTrial(pItem);
-      if (result) {
-        percolated++;
-      };
-    };
-    results.push_back(
-        {pItem, static_cast<double>(percolated) / numberOfTrials});
-  }
-};
-
-bool montecarlo::singleTrial(double pItem) {
-  percolator pGrid{gridSize};
-  int row{};
-  int col{};
-  double dist{};
-  for (int i{0}; i < gridSize * gridSize; i++) {
-    row = i / gridSize;
-    col = i % gridSize;
-    dist = distribution(machine);
-    if (dist < pItem) {
-      pGrid.openGate(row, col);
-    }
-  }
-  return pGrid.percolates();
-}
-void montecarlo::printResults() {
-  for (const auto &r : results) {
-    std::cout << r.first << ',' << r.second << '\n';
-  }
-}
-
-void montecarlo::newTrials() {
-  newResults.clear();
   for (int i = 0; i < numberOfTrials; i++) {
-    newResults.push_back(ultimateSingleTrial(0));
+    results.push_back(ultimateSingleTrial(0));
   };
 }
 
@@ -88,7 +51,7 @@ double montecarlo::ultimateSingleTrial(
   }
   return 1;
 }
-void montecarlo::printNewResults(std::vector<double> resultsList) {
+void montecarlo::printResults(std::vector<double> resultsList) {
   double result{};
   for (double r : resultsList) {
     result += r;
@@ -102,9 +65,7 @@ void montecarlo::injectionTrials() {
     injectionResults.push_back(ultimateSingleTrial(1, i));
   };
 }
-const std::vector<double> &montecarlo::getNewResults() const {
-  return newResults;
-}
+const std::vector<double> &montecarlo::getResults() const { return results; }
 const std::vector<double> &montecarlo::getInjectionResults() const {
   return injectionResults;
 }

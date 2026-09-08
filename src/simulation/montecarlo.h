@@ -13,9 +13,8 @@ private:
   std::random_device rd;
   std::mt19937 machine{rd()};
   std::uniform_real_distribution<double> distribution{0, 1};
-  std::vector<std::pair<double, double>> results{};
   std::vector<int> path{};
-  std::vector<double> newResults{};
+  std::vector<double> results{};
   std::vector<double> injectionResults{};
 
 public:
@@ -23,17 +22,11 @@ public:
 
   void trials();
 
-  bool singleTrial(double pItem);
-
-  void printResults();
-
-  void newTrials();
-
-  void printNewResults(std::vector<double> resultsList);
+  void printResults(std::vector<double> resultsList);
 
   void injectionTrials();
 
-  const std::vector<double> &getNewResults() const;
+  const std::vector<double> &getResults() const;
   const std::vector<double> &getInjectionResults() const;
   double ultimateSingleTrial(int offset, int trialNum = 0);
 };

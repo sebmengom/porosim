@@ -15,11 +15,11 @@ int main(int argc, char *argv[]) {
       }
       montecarlo sim(gridSize, numberOfTrials);
       auto startTest = std::chrono::steady_clock::now();
-      sim.newTrials();
+      sim.trials();
       auto endTest = std::chrono::steady_clock::now();
       auto elapsedTest = std::chrono::duration_cast<std::chrono::milliseconds>(
           endTest - startTest);
-      sim.printNewResults(sim.getNewResults());
+      sim.printResults(sim.getResults());
       std::cout << "Time elapsed: " << elapsedTest.count() << '\n';
 
       montecarlo injectionSim(gridSize, numberOfTrials);
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
       elapsedTest = std::chrono::duration_cast<std::chrono::milliseconds>(
           endTest - startTest);
 
-      injectionSim.printNewResults(injectionSim.getInjectionResults());
+      injectionSim.printResults(injectionSim.getInjectionResults());
       std::cout << "Time elapsed: " << elapsedTest.count() << '\n';
       return 0;
     } catch (...) {
