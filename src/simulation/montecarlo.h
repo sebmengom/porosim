@@ -29,11 +29,7 @@ public:
 
   void newTrials();
 
-  double newSingleTrial();
-
   void printNewResults(std::vector<double> resultsList);
-
-  double injectionTrial(int trialNum);
 
   void injectionTrials();
 
