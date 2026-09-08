@@ -1,5 +1,4 @@
 #include "percolator/percolator.h"
-#include "percolator.h"
 #include <cassert>
 #include <stack>
 #include <vector>
@@ -36,6 +35,10 @@ void percolator::openGate(int row, int col) {
 
   if (col != 0) {
     nb = i - 1;
+    unionAllThree(i, nb);
+  }
+  if (col != n - 1) {
+    nb = i + 1;
     unionAllThree(i, nb);
   }
 }
