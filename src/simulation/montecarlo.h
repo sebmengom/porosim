@@ -39,6 +39,7 @@ public:
 
   const std::vector<double> &getNewResults() const;
   const std::vector<double> &getInjectionResults() const;
+  double ultimateSingleTrial(int offset, int trialNum = 0);
 };
 
 #endif // !montecarlo_h

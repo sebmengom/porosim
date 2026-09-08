@@ -1,5 +1,4 @@
 #include "simulation/montecarlo.h"
-#include "montecarlo.h"
 #include "percolator/percolator.h"
 #include "utils/pathwriter.h"
 #include <algorithm>
@@ -51,28 +50,44 @@ void montecarlo::printResults() {
 void montecarlo::newTrials() {
   newResults.clear();
   for (int i = 0; i < numberOfTrials; i++) {
-    newResults.push_back(newSingleTrial());
+    newResults.push_back(ultimateSingleTrial(0));
   };
 }
 
-double montecarlo::newSingleTrial() {
+double montecarlo::ultimateSingleTrial(
+    int offset,
+    int trialNum) { // Offset being 1 means that there is an injection.
+  assert(offset == 0 || offset == 1);
   percolator pGrid{gridSize};
   int row{};
   int col{};
+  if (offset == 1) {
+    pGrid.openGate(0, 0);
+  }
   std::vector<int> shuffled(gridSize * gridSize);
   std::iota(shuffled.begin(), shuffled.end(), 0);
-  std::shuffle(shuffled.begin(), shuffled.end(), machine);
-  for (int i = 0; i < gridSize * gridSize; i++) {
+  std::shuffle(shuffled.begin() + offset, shuffled.end(), machine);
+  for (int i = offset; i < gridSize * gridSize; i++) {
     row = shuffled[i] / gridSize;
     col = shuffled[i] % gridSize;
     pGrid.openGate(row, col);
-    if (pGrid.percolates()) {
-      return (static_cast<double>(i) + 1) / (gridSize * gridSize);
+
+    if (offset == 1) {
+      if (pGrid.injectionReaches()) {
+        pGrid.runDfsFromInjection();
+        path = pGrid.findPath(row, col);
+        int writeStatus = writePathToCsv(path, gridSize, filename(trialNum));
+        assert(writeStatus == 0);
+        return (static_cast<double>(i) + 1) / (gridSize * gridSize);
+      }
+    } else {
+      if (pGrid.percolates()) {
+        return (static_cast<double>(i) + 1) / (gridSize * gridSize);
+      }
     }
   }
   return 1;
 }
-
 void montecarlo::printNewResults(std::vector<double> resultsList) {
   double result{};
   for (double r : resultsList) {
@@ -81,35 +96,10 @@ void montecarlo::printNewResults(std::vector<double> resultsList) {
   std::cout << "Threshold: " << result / numberOfTrials << '\n';
 }
 
-double montecarlo::injectionTrial(int trialNum) {
-  percolator grid{gridSize};
-  int row{};
-  int col{};
-  grid.openGate(0, 0);
-  std::vector<int> shuffled(gridSize * gridSize);
-  std::iota(shuffled.begin(), shuffled.end(), 0);
-  std::shuffle(shuffled.begin() + 1, shuffled.end(), machine);
-
-  for (int i = 1; i < gridSize * gridSize; i++) {
-    row = shuffled[i] / gridSize;
-    col = shuffled[i] % gridSize;
-    grid.openGate(row, col);
-
-    if (grid.injectionReaches()) {
-      grid.runDfsFromInjection();
-      path = grid.findPath(row, col);
-      int writeStatus = writePathToCsv(path, gridSize, filename(trialNum));
-      assert(writeStatus == 0);
-      return (static_cast<double>(i) + 1) / (gridSize * gridSize);
-    }
-  }
-  return 1;
-}
-
 void montecarlo::injectionTrials() {
   injectionResults.clear();
   for (int i = 0; i < numberOfTrials; i++) {
-    injectionResults.push_back(injectionTrial(i));
+    injectionResults.push_back(ultimateSingleTrial(1, i));
   };
 }
 const std::vector<double> &montecarlo::getNewResults() const {
