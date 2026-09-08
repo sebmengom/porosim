@@ -1,4 +1,5 @@
 #include "percolator/percolator.h"
+#include "percolator.h"
 #include <cassert>
 #include <stack>
 #include <vector>
@@ -9,6 +10,7 @@ percolator::percolator(int n)
       visited(n * n, 0), parent(n * n, 0) {
   assert(n > 0);
 };
+
 void percolator::openGate(int row, int col) {
   assert(row >= 0 && row < n && col >= 0 && col < n);
   int i{row * n + col};
@@ -20,11 +22,7 @@ void percolator::openGate(int row, int col) {
   }
   if (row != 0) {
     nb = i - n;
-    if (gateStatus[nb] == 1) {
-      arr.unionSets(i, nb);
-      arrTop.unionSets(i, nb);
-      injectionArr.unionSets(i, nb);
-    };
+    unionAllThree(i, nb);
   }
   if (row == n - 1) {
     arr.unionSets(i, bottom);
@@ -33,29 +31,12 @@ void percolator::openGate(int row, int col) {
 
   if (row != n - 1) {
     nb = i + n;
-    if (gateStatus[nb] == 1) {
-      arr.unionSets(i, nb);
-      arrTop.unionSets(i, nb);
-      injectionArr.unionSets(i, nb);
-    }
-  }
-
-  if (col != n - 1) {
-    nb = i + 1;
-    if (gateStatus[nb] == 1) {
-      arr.unionSets(i, nb);
-      arrTop.unionSets(i, nb);
-      injectionArr.unionSets(i, nb);
-    };
+    unionAllThree(i, nb);
   }
 
   if (col != 0) {
     nb = i - 1;
-    if (gateStatus[nb] == 1) {
-      arr.unionSets(i, nb);
-      arrTop.unionSets(i, nb);
-      injectionArr.unionSets(i, nb);
-    }
+    unionAllThree(i, nb);
   }
 }
 
@@ -157,4 +138,12 @@ std::vector<int> percolator::findPath(int row, int col) {
 
 bool percolator::injectionReaches() {
   return injectionArr.connected(0, (bottom));
+}
+
+void percolator::unionAllThree(int i, int nb) {
+  if (gateStatus[nb] == 1) {
+    arr.unionSets(i, nb);
+    arrTop.unionSets(i, nb);
+    injectionArr.unionSets(i, nb);
+  };
 }

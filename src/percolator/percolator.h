@@ -39,6 +39,8 @@ public:
   std::vector<int> findPath(int row, int col);
 
   bool injectionReaches();
+
+  void unionAllThree(int i, int nb);
 };
 
 #endif // !PERCOLATOR_H
