@@ -1,6 +1,7 @@
 #ifndef PERCOLATOR_H
 #define PERCOLATOR_H
 
+#include "algorithms/dfs.h"
 #include "algorithms/dsu.h"
 #include <stack>
 #include <vector>
@@ -13,11 +14,7 @@ private:
   unionFind arrTop;
   unionFind injectionArr;
   std::vector<int> gateStatus;
-  std::vector<int> visited;
-  std::vector<int> parent;
-  void resetVisited();
-  void pushToStack(int nb, int parentIndex, std::stack<int> &stack,
-                   std::vector<int> &parentArray);
+  pathfinder finder;
 
 public:
   percolator(int n);
@@ -30,17 +27,11 @@ public:
 
   bool isFull(int row, int col);
 
-  void depthFirstSearch();
-
-  void runDfsFromInjection();
-
-  bool isVisited(int row, int col);
-
-  std::vector<int> findPath(int row, int col);
-
   bool injectionReaches();
 
   void unionAllThree(int i, int nb);
+  void runDfsFromInjection();
+  std::vector<int> findPath(int row, int col);
 };
 
 #endif // !PERCOLATOR_H
