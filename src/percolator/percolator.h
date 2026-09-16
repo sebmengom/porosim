@@ -1,8 +1,8 @@
 #ifndef PERCOLATOR_H
 #define PERCOLATOR_H
 
-#include "algorithms/dfs.h"
 #include "algorithms/dsu.h"
+#include "algorithms/pathfinder.h"
 #include <stack>
 #include <vector>
 class percolator {

@@ -1,4 +1,4 @@
-#include "algorithms/dfs.h"
+#include "algorithms/pathfinder.h"
 #include <cassert>
 #include <stack>
 pathfinder::pathfinder(int n, const std::vector<int> &gateStatus)

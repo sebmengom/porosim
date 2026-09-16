@@ -1,5 +1,5 @@
-#ifndef DFS_H
-#define DFS_H
+#ifndef PATHFINDER_H
+#define PATHFINDER_H
 #include <stack>
 #include <vector>
 class pathfinder {
@@ -12,6 +12,8 @@ private:
   void pushToStack(int nb, int parentIndex, std::stack<int> &stack,
                    std::vector<int> &parentArray);
   void depthFirstSearch();
+
+  void breadthFirstSearch();
 
   bool isVisited(int row, int col);
 
