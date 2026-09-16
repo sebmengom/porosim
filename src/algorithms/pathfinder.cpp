@@ -142,7 +142,7 @@ void pathfinder::pushToQueue(int nb, int parentIndex, std::queue<int> &queue,
   queue.push(nb);
 }
 
-void pathfinder::runBfsFromInejectionPoint() {
+void pathfinder::runBfsFromInjectionPoint() {
   pathfinder::resetVisited();
   pathfinder::breadthFirstSearch();
 }

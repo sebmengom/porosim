@@ -25,7 +25,7 @@ private:
 public:
   pathfinder(int n, const std::vector<int> &gateStatus);
   void runDfsFromInjectionPoint();
-  void runBfsFromInejectionPoint();
+  void runBfsFromInjectionPoint();
   std::vector<int> findPath(int row, int col);
 };
 

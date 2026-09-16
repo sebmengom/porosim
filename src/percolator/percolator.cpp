@@ -69,6 +69,8 @@ void percolator::unionAllThree(int i, int nb) {
 
 void percolator::runDfsFromInjection() { finder.runDfsFromInjectionPoint(); }
 
+void percolator::runBfsFromInjection() { finder.runBfsFromInjectionPoint(); }
+
 std::vector<int> percolator::findPath(int row, int col) {
   return finder.findPath(row, col);
 }

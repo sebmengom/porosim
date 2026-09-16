@@ -31,6 +31,7 @@ public:
 
   void unionAllThree(int i, int nb);
   void runDfsFromInjection();
+  void runBfsFromInjection();
   std::vector<int> findPath(int row, int col);
 };
 

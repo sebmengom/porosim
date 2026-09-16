@@ -37,7 +37,7 @@ double montecarlo::ultimateSingleTrial(
 
     if (offset == 1) {
       if (pGrid.injectionReaches()) {
-        pGrid.runDfsFromInjection();
+        pGrid.runBfsFromInjection();
         path = pGrid.findPath(row, col);
         int writeStatus = writePathToCsv(path, gridSize, filename(trialNum));
         assert(writeStatus == 0);
