@@ -1,6 +1,10 @@
 #include "algorithms/pathfinder.h"
+#include "percolator/percolator.h"
 #include <cassert>
+#include <filesystem>
+#include <queue>
 #include <stack>
+#include <vector>
 pathfinder::pathfinder(int n, const std::vector<int> &gateStatus)
     : n(n), gateStatus(gateStatus), visited(n * n, 0), parent(n * n, 0) {};
 void pathfinder::depthFirstSearch() {
@@ -84,4 +88,61 @@ std::vector<int> pathfinder::findPath(int row, int col) {
     parentIndex = parent[parentIndex];
   }
   return path;
+}
+
+void pathfinder::breadthFirstSearch() {
+  std::queue<int> queue{};
+  visited[0] = 1;
+  parent[0] = -1;
+  queue.push(0);
+
+  while (queue.size() != 0) {
+    int i{queue.front()};
+    queue.pop();
+    int nb{};
+    int row{i / n};
+    int col{i % n};
+
+    if (row != 0) {
+      nb = i - n;
+
+      if (gateStatus[nb] == 1 && visited[nb] == 0) {
+        pushToQueue(nb, i, queue, parent);
+      }
+    }
+
+    if (row != n - 1) {
+      nb = i + n;
+      if (gateStatus[nb] == 1 && visited[nb] == 0) {
+        pushToQueue(nb, i, queue, parent);
+      }
+    }
+
+    if (col != n - 1) {
+      nb = i + 1;
+
+      if (gateStatus[nb] == 1 && visited[nb] == 0) {
+        pushToQueue(nb, i, queue, parent);
+      }
+    }
+
+    if (col != 0) {
+      nb = i - 1;
+      if (gateStatus[nb] == 1 && visited[nb] == 0) {
+        pushToQueue(nb, i, queue, parent);
+      }
+    }
+  }
+}
+
+void pathfinder::pushToQueue(int nb, int parentIndex, std::queue<int> &queue,
+                             std::vector<int> &parentArray) {
+  visited[nb] = 1;
+  parentArray[nb] = parentIndex;
+  queue.push(nb);
+}
+
+void pathfinder::runBfsFromInejectionPoint() {
+  pathfinder::resetVisited();
+  pathfinder::breadthFirstSearch();
 }
