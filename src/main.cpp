@@ -32,6 +32,23 @@ int main(int argc, char *argv[]) {
 
       injectionSim.printResults(injectionSim.getInjectionResults());
       std::cout << "Time elapsed: " << elapsedTest.count() << '\n';
+
+      double bfsSum{};
+      double dfsSum{};
+
+      for (double i : injectionSim.dfsTimes) {
+        dfsSum += i;
+      }
+
+      for (double i : injectionSim.bfsTimes) {
+        bfsSum += i;
+      }
+
+      std::cout << "DFS avg time: " << dfsSum / injectionSim.dfsTimes.size()
+                << '\n';
+      std::cout << "BFS avg time: " << bfsSum / injectionSim.bfsTimes.size()
+                << '\n';
+
       return 0;
     } catch (...) {
       std::cout << "Invalid Input.\n";

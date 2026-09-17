@@ -3,6 +3,7 @@
 #include "utils/pathwriter.h"
 #include <algorithm>
 #include <cassert>
+#include <chrono>
 #include <iostream>
 #include <numeric>
 #include <vector>
@@ -37,10 +38,32 @@ double montecarlo::ultimateSingleTrial(
 
     if (offset == 1) {
       if (pGrid.injectionReaches()) {
-        pGrid.runBfsFromInjection();
+        auto start = std::chrono::steady_clock::now();
+        pGrid.runDfsFromInjection();
+        auto end = std::chrono::steady_clock::now();
+        auto elapsedDfs =
+            std::chrono::duration<double, std::milli>(end - start).count();
+        dfsTimes.push_back(elapsedDfs);
         path = pGrid.findPath(row, col);
-        int writeStatus = writePathToCsv(path, gridSize, filename(trialNum));
+        int writeStatus =
+            writePathToCsv(path, gridSize, filename(trialNum) + "_dfs");
         assert(writeStatus == 0);
+
+        start = std::chrono::steady_clock::now();
+        pGrid.runBfsFromInjection();
+        end = std::chrono::steady_clock::now();
+
+        auto elapsedBfs =
+            std::chrono::duration<double, std::milli>(end - start).count();
+
+        bfsTimes.push_back(elapsedBfs);
+
+        path = pGrid.findPath(row, col);
+
+        writeStatus =
+            writePathToCsv(path, gridSize, filename(trialNum) + "_bfs");
+        assert(writeStatus == 0);
+
         return (static_cast<double>(i) + 1) / (gridSize * gridSize);
       }
     } else {

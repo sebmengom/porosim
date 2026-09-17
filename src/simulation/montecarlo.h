@@ -1,6 +1,7 @@
 #ifndef montecarlo_h
 #define montecarlo_h
 
+#include <chrono>
 #include <random>
 #include <utility>
 #include <vector>
@@ -25,6 +26,9 @@ public:
   void printResults(std::vector<double> resultsList);
 
   void injectionTrials();
+
+  std::vector<double> dfsTimes{};
+  std::vector<double> bfsTimes{};
 
   const std::vector<double> &getResults() const;
   const std::vector<double> &getInjectionResults() const;
