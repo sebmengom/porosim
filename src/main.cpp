@@ -2,6 +2,7 @@
 #include <chrono>
 #include <iostream>
 #include <string>
+#include <vector>
 
 int main(int argc, char *argv[]) {
 
@@ -35,19 +36,19 @@ int main(int argc, char *argv[]) {
 
       double bfsSum{};
       double dfsSum{};
+      std::vector<double> dfsTimes{injectionSim.getDfsTimes()};
+      std::vector<double> bfsTimes{injectionSim.getBfsTimes()};
 
-      for (double i : injectionSim.dfsTimes) {
+      for (double i : dfsTimes) {
         dfsSum += i;
       }
 
-      for (double i : injectionSim.bfsTimes) {
+      for (double i : bfsTimes) {
         bfsSum += i;
       }
 
-      std::cout << "DFS avg time: " << dfsSum / injectionSim.dfsTimes.size()
-                << '\n';
-      std::cout << "BFS avg time: " << bfsSum / injectionSim.bfsTimes.size()
-                << '\n';
+      std::cout << "DFS avg time: " << dfsSum / dfsTimes.size() << '\n';
+      std::cout << "BFS avg time: " << bfsSum / bfsTimes.size() << '\n';
 
       return 0;
     } catch (...) {

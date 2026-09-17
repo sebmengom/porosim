@@ -17,6 +17,8 @@ private:
   std::vector<int> path{};
   std::vector<double> results{};
   std::vector<double> injectionResults{};
+  std::vector<double> dfsTimes{};
+  std::vector<double> bfsTimes{};
 
 public:
   montecarlo(int gridSize, int numberOfTrials);
@@ -27,12 +29,14 @@ public:
 
   void injectionTrials();
 
-  std::vector<double> dfsTimes{};
-  std::vector<double> bfsTimes{};
-
   const std::vector<double> &getResults() const;
+
   const std::vector<double> &getInjectionResults() const;
+
   double ultimateSingleTrial(int offset, int trialNum = 0);
+
+  const std::vector<double> &getBfsTimes() const;
+  const std::vector<double> &getDfsTimes() const;
 };
 
 #endif // !montecarlo_h

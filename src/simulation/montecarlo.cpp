@@ -92,3 +92,5 @@ const std::vector<double> &montecarlo::getResults() const { return results; }
 const std::vector<double> &montecarlo::getInjectionResults() const {
   return injectionResults;
 }
+const std::vector<double> &montecarlo::getDfsTimes() const { return dfsTimes; }
+const std::vector<double> &montecarlo::getBfsTimes() const { return bfsTimes; }
