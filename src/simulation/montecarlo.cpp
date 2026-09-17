@@ -39,7 +39,7 @@ double montecarlo::ultimateSingleTrial(
     if (offset == 1) {
       if (pGrid.injectionReaches()) {
         auto start = std::chrono::steady_clock::now();
-        pGrid.runDfsFromInjection();
+        pGrid.runDfsFromInjection(row, col);
         auto end = std::chrono::steady_clock::now();
         auto elapsedDfs =
             std::chrono::duration<double, std::milli>(end - start).count();
@@ -50,7 +50,7 @@ double montecarlo::ultimateSingleTrial(
         assert(writeStatus == 0);
 
         start = std::chrono::steady_clock::now();
-        pGrid.runBfsFromInjection();
+        pGrid.runBfsFromInjection(row, col);
         end = std::chrono::steady_clock::now();
 
         auto elapsedBfs =

@@ -7,7 +7,7 @@
 #include <vector>
 pathfinder::pathfinder(int n, const std::vector<int> &gateStatus)
     : n(n), gateStatus(gateStatus), visited(n * n, 0), parent(n * n, 0) {};
-void pathfinder::depthFirstSearch() {
+void pathfinder::depthFirstSearch(int target) {
 
   std::stack<int> stack{};
   visited[0] = 1;
@@ -17,6 +17,10 @@ void pathfinder::depthFirstSearch() {
   while (!(stack.empty())) {
     int i{stack.top()};
     stack.pop();
+    if (i == target) {
+      break;
+    }
+
     int nb{};
     int row{i / n};
     int col{i % n};
@@ -61,9 +65,10 @@ void pathfinder::resetVisited() {
   }
 }
 
-void pathfinder::runDfsFromInjectionPoint() {
+void pathfinder::runDfsFromInjectionPoint(int row, int col) {
+  int target{row * n + col};
   pathfinder::resetVisited();
-  pathfinder::depthFirstSearch();
+  pathfinder::depthFirstSearch(target);
 }
 
 bool pathfinder::isVisited(int row, int col) {
@@ -90,7 +95,7 @@ std::vector<int> pathfinder::findPath(int row, int col) {
   return path;
 }
 
-void pathfinder::breadthFirstSearch() {
+void pathfinder::breadthFirstSearch(int target) {
   std::queue<int> queue{};
   visited[0] = 1;
   parent[0] = -1;
@@ -99,6 +104,9 @@ void pathfinder::breadthFirstSearch() {
   while (queue.size() != 0) {
     int i{queue.front()};
     queue.pop();
+    if (i == target) {
+      break;
+    }
     int nb{};
     int row{i / n};
     int col{i % n};
@@ -142,7 +150,8 @@ void pathfinder::pushToQueue(int nb, int parentIndex, std::queue<int> &queue,
   queue.push(nb);
 }
 
-void pathfinder::runBfsFromInjectionPoint() {
+void pathfinder::runBfsFromInjectionPoint(int row, int col) {
+  int target{row * n + col};
   pathfinder::resetVisited();
-  pathfinder::breadthFirstSearch();
+  pathfinder::breadthFirstSearch(target);
 }

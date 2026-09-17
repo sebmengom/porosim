@@ -30,8 +30,8 @@ public:
   bool injectionReaches();
 
   void unionAllThree(int i, int nb);
-  void runDfsFromInjection();
-  void runBfsFromInjection();
+  void runDfsFromInjection(int row, int col);
+  void runBfsFromInjection(int row, int col);
   std::vector<int> findPath(int row, int col);
 };
 

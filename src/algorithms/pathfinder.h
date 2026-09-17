@@ -16,16 +16,16 @@ private:
   void pushToQueue(int nb, int parentIndex, std::queue<int> &queue,
                    std::vector<int> &parentArray);
 
-  void depthFirstSearch();
+  void depthFirstSearch(int target);
 
-  void breadthFirstSearch();
+  void breadthFirstSearch(int target);
 
   bool isVisited(int row, int col);
 
 public:
   pathfinder(int n, const std::vector<int> &gateStatus);
-  void runDfsFromInjectionPoint();
-  void runBfsFromInjectionPoint();
+  void runDfsFromInjectionPoint(int row, int col);
+  void runBfsFromInjectionPoint(int row, int col);
   std::vector<int> findPath(int row, int col);
 };
 
