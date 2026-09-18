@@ -1,8 +1,8 @@
 main: dsu.o pathfinder.o percolator.o montecarlo.o pathwriter.o main.o 
 	g++ dsu.o pathfinder.o percolator.o montecarlo.o pathwriter.o main.o -o main
 
-test: percolator.o testing.o dsu.o 
-	g++ percolator.o testing.o dsu.o -o test
+test: percolator.o testing.o dsu.o pathfinder.o
+	g++ percolator.o testing.o dsu.o pathfinder.o -o test
 
 dsu.o: src/algorithms/dsu.cpp src/algorithms/dsu.h
 	g++ -std=c++17 -O2 -Wall -Wextra -Isrc -c src/algorithms/dsu.cpp
@@ -19,7 +19,7 @@ pathwriter.o: src/utils/pathwriter.cpp src/utils/pathwriter.h
 montecarlo.o : src/simulation/montecarlo.cpp src/simulation/montecarlo.h src/percolator/percolator.h src/utils/pathwriter.h
 	g++ -std=c++17 -O2 -Wall -Wextra -Isrc -c src/simulation/montecarlo.cpp
 
-testing.o : tests/testing.cpp  src/percolator/percolator.h src/algorithms/dsu.h
+testing.o : tests/testing.cpp  src/percolator/percolator.h src/algorithms/dsu.h src/algorithms/pathfinder.h
 	g++ -std=c++17 -O2 -Wall -Wextra -Isrc -c tests/testing.cpp
 
 main.o : src/main.cpp src/simulation/montecarlo.h

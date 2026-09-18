@@ -39,18 +39,20 @@ double montecarlo::ultimateSingleTrial(
     if (offset == 1) {
       if (pGrid.injectionReaches()) {
         auto start = std::chrono::steady_clock::now();
-        pGrid.runDfsFromInjection(row, col);
+        int dfsExit{pGrid.runDfsFromInjection()};
         auto end = std::chrono::steady_clock::now();
         auto elapsedDfs =
             std::chrono::duration<double, std::milli>(end - start).count();
         dfsTimes.push_back(elapsedDfs);
-        path = pGrid.findPath(row, col);
+        int dfsRow{dfsExit / gridSize};
+        int dfsCol{dfsExit % gridSize};
+        path = pGrid.findPath(dfsRow, dfsCol);
         int writeStatus =
             writePathToCsv(path, gridSize, filename(trialNum) + "_dfs");
         assert(writeStatus == 0);
 
         start = std::chrono::steady_clock::now();
-        pGrid.runBfsFromInjection(row, col);
+        int bfsExit{pGrid.runBfsFromInjection()};
         end = std::chrono::steady_clock::now();
 
         auto elapsedBfs =
@@ -58,7 +60,9 @@ double montecarlo::ultimateSingleTrial(
 
         bfsTimes.push_back(elapsedBfs);
 
-        path = pGrid.findPath(row, col);
+        int bfsRow{bfsExit / gridSize};
+        int bfsCol{bfsExit % gridSize};
+        path = pGrid.findPath(bfsRow, bfsCol);
 
         writeStatus =
             writePathToCsv(path, gridSize, filename(trialNum) + "_bfs");
