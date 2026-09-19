@@ -6,5 +6,4 @@ trialPaths/
 !*.cpp
 !.gitignore
 !Makefile
-testing.cpp
 compile_flags.txt
