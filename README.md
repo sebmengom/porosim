@@ -64,3 +64,58 @@ Implemented a DFS algorithm to find the path from top to bottom, runDfsFromInjec
 
 ## Exported to csv
 new file "pathwriter.cpp" writes the route to a new csv file, creates directory if it doesnt exist. writes step, row, col.
+
+## BFS
+BFS is basically the same as DFS, but uses a queue instead of a stack, meaning it's FIFO. This means it takes more time reaching the bottom than DFS does, since it explores level by level instead of diving down a branch.
+
+The `target` parameter that DFS/BFS used to take made no sense: what we're actually looking for is percolation between top and bottom (any open cell in the last row), not one specific fixed target. So both algorithms now just check `row == n - 1` and return as soon as they hit it.
+
+## DFS vs BFS: results
+
+Note: the second `Threshold` value below (injection) is a different metric than the first. It measures how many cells need to open before the cluster seeded at (0,0) specifically reaches the bottom, not general top-to-bottom percolation, which is why it's higher than 0.593.
+
+\`\`\`
+./main 100 100
+Threshold: 0.591852
+Time elapsed: 117
+Threshold: 0.678677
+Time elapsed: 235
+DFS avg time: 0.0512554
+BFS avg time: 0.149522
+
+./main 200 200
+Threshold: 0.59311
+Time elapsed: 920
+Threshold: 0.668489
+Time elapsed: 1521
+DFS avg time: 0.151022
+BFS avg time: 0.526421
+
+./main 250 250
+Threshold: 0.593148
+Time elapsed: 1751
+Threshold: 0.675291
+Time elapsed: 2845
+DFS avg time: 0.224778
+BFS avg time: 0.805252
+
+./main 25 250
+Threshold: 0.592147
+Time elapsed: 20
+Threshold: 0.67385
+Time elapsed: 159
+DFS avg time: 0.00733959
+BFS avg time: 0.0126147
+
+./main 10 100
+Threshold: 0.5933
+Time elapsed: 1
+Threshold: 0.6603
+Time elapsed: 44
+DFS avg time: 0.00252574
+BFS avg time: 0.00275924
+\`\`\`
+
+DFS and BFS's relative speed depends on the scenario. Here, DFS is way faster than BFS because it's looking for a node that's deep in the search space (the bottom row), and DFS dives to the bottom of a branch instead of searching level by level like BFS does.
+
+This comes with a trade-off though: BFS guarantees the shortest path since it explores level by level, while DFS doesn't. In one trial on the same grid, BFS found a path of 32 steps while DFS found one of 43 steps to reach the same row. So DFS wins on speed, BFS wins on path length.
